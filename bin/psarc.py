@@ -89,7 +89,7 @@ def aes_ctr(data, key, ivector, encrypt=True):
     """AES CTR Mode"""
     output = bytes()
     #First param: Number of bits of the cipher. 64 is not meaningful.
-    ctr = Counter.new(64, initial_value = ivector)
+    ctr = Counter.new(128, initial_value = ivector)
     cipher = AES.new(codecs.decode(key,'hex'), mode=AES.MODE_CTR, counter=ctr)
 
     if encrypt:
@@ -218,7 +218,7 @@ def create_entry(name, data):
         'zlength': zlength,
         'length': len(data),
         'data': output,
-        'md5': md5.new(name).digest() if name != '' else bytes(16)
+        'md5': hashlib.md5.new(name).digest() if name != '' else bytes(16)
     }
 
 
